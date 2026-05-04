@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("https://carrygo-production.up.railway.app/api/notifications")
+@RequestMapping("/api/notifications")
 @CrossOrigin(origins = "*")
 public class NotificationsController {
 
