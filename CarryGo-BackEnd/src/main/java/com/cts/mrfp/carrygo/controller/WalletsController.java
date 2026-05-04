@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-@RequestMapping("https://carrygo-production.up.railway.app/api/wallets")
+@RequestMapping("/api/wallets")
 @CrossOrigin(origins = "*")
 public class WalletsController {
 
