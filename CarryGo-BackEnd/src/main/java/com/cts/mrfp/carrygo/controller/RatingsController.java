@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("https://carrygo-production.up.railway.app/api/ratings")
+@RequestMapping("/api/ratings")
 @CrossOrigin(origins = "*")
 public class RatingsController {
 
