@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 @RestController
-@RequestMapping("https://carrygo-production.up.railway.app/api/sse")
+@RequestMapping("/api/sse")
 public class SseController {
 
     @Autowired private SseService sseService;
