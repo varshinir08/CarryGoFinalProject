@@ -1,3 +1,4 @@
+import * as L from 'leaflet';
 import {
   Component, EventEmitter, Output, OnInit, OnDestroy, OnChanges, SimpleChanges,
   AfterViewInit, Input, ViewChild, ElementRef, Inject, PLATFORM_ID, ChangeDetectorRef, NgZone
@@ -61,7 +62,6 @@ export class MapPickerComponent implements OnInit, AfterViewInit, OnChanges, OnD
   showSuggestions = false;
 
   /* ── Leaflet internals (any — loaded dynamically) ── */
-  private L:              any;
   private map:            any;
   private pickupMarker:   any;
   private dropMarker:     any;
@@ -91,10 +91,9 @@ export class MapPickerComponent implements OnInit, AfterViewInit, OnChanges, OnD
     this.subs.push(sub);
   }
 
-  async ngAfterViewInit(): Promise<void> {
-    if (!isPlatformBrowser(this.platformId)) return;
-    this.L = await import('leaflet');
-    this.fixLeafletIcons();
+ ngAfterViewInit(): void {
+  if (!isPlatformBrowser(this.platformId)) return;
+  this.fixLeafletIcons();
     this.leafletLoaded = true;
     // DO NOT call initMap() here — the container is hidden (display:none via [hidden]="!isOpen")
     // and Leaflet cannot calculate the map size on a zero-dimension element.
@@ -136,23 +135,23 @@ export class MapPickerComponent implements OnInit, AfterViewInit, OnChanges, OnD
   /* ─────────────── Map init ─────────────── */
 
   private fixLeafletIcons(): void {
-    delete (this.L.Icon.Default.prototype as any)._getIconUrl;
-    this.L.Icon.Default.mergeOptions({
-      iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
-      iconUrl:       'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
-      shadowUrl:     'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
-    });
-  }
+  delete (L.Icon.Default.prototype as any)._getIconUrl;
+  L.Icon.Default.mergeOptions({
+    iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
+    iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+    shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png'
+  });
+}
 
   private initMap(): void {
     if (!this.mapElRef?.nativeElement) return;
-    this.map = this.L.map(this.mapElRef.nativeElement, {
+    this.map = L.map(this.mapElRef.nativeElement, {
       center:      [20.5937, 78.9629],
       zoom:        5,
       zoomControl: true,
     });
 
-    this.L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '© <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors',
       maxZoom: 19,
     }).addTo(this.map);
@@ -234,19 +233,19 @@ export class MapPickerComponent implements OnInit, AfterViewInit, OnChanges, OnD
   private placeMarker(type: 'pickup' | 'drop', lat: number, lng: number): void {
     if (type === 'pickup') {
       if (this.pickupMarker) this.pickupMarker.remove();
-      this.pickupMarker = this.L.marker([lat, lng], { icon: this.dotIcon('#22c55e') })
+      this.pickupMarker = L.marker([lat, lng], { icon: this.dotIcon('#22c55e') })
         .addTo(this.map)
         .bindPopup('<b>📍 Pickup</b>').openPopup();
     } else {
       if (this.dropMarker) this.dropMarker.remove();
-      this.dropMarker = this.L.marker([lat, lng], { icon: this.dotIcon('#f97316') })
+      this.dropMarker = L.marker([lat, lng], { icon: this.dotIcon('#f97316') })
         .addTo(this.map)
         .bindPopup('<b>🏁 Drop-off</b>').openPopup();
     }
   }
 
   private dotIcon(color: string): any {
-    return this.L.divIcon({
+    return L.divIcon({
       className: '',
       html: `
         <div style="position:relative;width:24px;height:24px;">
@@ -286,7 +285,7 @@ export class MapPickerComponent implements OnInit, AfterViewInit, OnChanges, OnD
           this.durationMin = Math.round(route.duration  / 60);
 
           if (this.routeLayer) this.routeLayer.remove();
-          this.routeLayer = this.L.geoJSON(route.geometry, {
+          this.routeLayer = L.geoJSON(route.geometry, {
             style: { color: '#f97316', weight: 5, opacity: 0.75, dashArray: '' },
           }).addTo(this.map);
           this.map.fitBounds(this.routeLayer.getBounds(), { padding: [50, 50] });
