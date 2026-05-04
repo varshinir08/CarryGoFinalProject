@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("https://carrygo-production.up.railway.app/api/chat")
+@RequestMapping("api/chat")
 @CrossOrigin(origins = "*")
 public class ChatController {
 
