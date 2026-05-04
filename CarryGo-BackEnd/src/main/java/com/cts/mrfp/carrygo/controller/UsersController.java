@@ -19,7 +19,7 @@ import com.cts.mrfp.carrygo.service.UsersService;
 import com.cts.mrfp.carrygo.util.DTOConverter;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("https://carrygo-production.up.railway.app/api/users")
 @CrossOrigin(origins = "*") // allow Angular frontend
 public class UsersController {
     private final UsersService usersService;

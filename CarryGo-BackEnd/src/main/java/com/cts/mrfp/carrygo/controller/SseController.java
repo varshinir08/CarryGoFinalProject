@@ -6,14 +6,14 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 @RestController
-@RequestMapping("/api/sse")
+@RequestMapping("https://carrygo-production.up.railway.app/api/sse")
 public class SseController {
 
     @Autowired private SseService sseService;
 
     /**
      * Clients connect here to receive real-time events.
-     * EventSource in browser: new EventSource('/api/sse/subscribe/123')
+     * EventSource in browser: new EventSource('https://carrygo-production.up.railway.app/api/sse/subscribe/123')
      */
     @GetMapping(value = "/subscribe/{userId}", produces = "text/event-stream")
     public SseEmitter subscribe(

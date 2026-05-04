@@ -1,7 +1,7 @@
 package com.cts.mrfp.carrygo.dto;
 
 /**
- * Payload for POST /api/users/{userId}/register-commuter.
+ * Payload for POST https://carrygo-production.up.railway.app/api/users/{userId}/register-commuter.
  * Uses a plain String for licenceExpiry ("YYYY-MM-DD") to avoid
  * Jackson LocalDate deserialization issues across versions.
  */

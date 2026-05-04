@@ -114,7 +114,7 @@ export class PorterKycComponent implements OnInit {
     agreedTerms: false, agreedAccuracy: false
   };
 
-  private readonly apiBase = '/api';
+  private readonly apiBase = 'https://carrygo-production.up.railway.app/api';
 
   constructor(
     private authService: AuthService,

@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/deliveries")
+@RequestMapping("https://carrygo-production.up.railway.app/api/deliveries")
 @CrossOrigin(origins = "*")
 public class DeliveriesController {
 

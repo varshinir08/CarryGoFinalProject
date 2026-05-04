@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/fare")
+@RequestMapping("https://carrygo-production.up.railway.app/api/fare")
 @CrossOrigin(origins = "*")
 public class FareController {
 
