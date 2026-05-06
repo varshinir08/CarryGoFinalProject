@@ -10,7 +10,6 @@ import { PorterProfileComponent } from './porter-profile/porter-profile';
 import { AuthGuard } from './services/auth.guard';
 import { PorterGuard } from './services/porter.guard';
 import { SendParcelComponent } from './send-parcel/send-parcel';
-import { ScheduleDeliveryComponent } from './schedule-delivery/schedule-delivery';
 import { CommuterRegisterComponent } from './commuter-register/commuter-register';
 
 export const routes: Routes = [
@@ -21,8 +20,6 @@ export const routes: Routes = [
   { path: 'user-dashboard', component: UserDashboard, canActivate: [AuthGuard] },
   { path: 'send-parcel/:userId', component: SendParcelComponent, canActivate: [AuthGuard] },
   { path: 'send-parcel', component: SendParcelComponent, canActivate: [AuthGuard] },
-  { path: 'schedule-delivery/:userId', component: ScheduleDeliveryComponent, canActivate: [AuthGuard] },
-  { path: 'schedule-delivery', component: ScheduleDeliveryComponent, canActivate: [AuthGuard] },
   { path: 'commuter-register/:userId', component: CommuterRegisterComponent, canActivate: [AuthGuard] },
   { path: 'commuter-register', component: CommuterRegisterComponent, canActivate: [AuthGuard] },
   { path: 'porter-dashboard/:userId', component: PorterDashboardComponent, canActivate: [PorterGuard] },

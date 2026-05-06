@@ -446,6 +446,15 @@
               {{ fareLoading ? 'Fetching fare…' : 'Get Price Estimate' }}
             </button>
 
+            <!-- Wallet insufficient funds warning -->
+            <div class="wallet-error-row" *ngIf="walletError">
+              <svg width="14" height="14" fill="none" stroke="#ef4444" stroke-width="2" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 8v4M12 16h.01"/>
+              </svg>
+              {{ walletError }}
+              <button class="wallet-add-link" (click)="setSection('wallet')">Add Money →</button>
+            </div>
+
             <button
               *ngIf="bookingStep === 'estimated'"
               class="btn-primary"
@@ -490,26 +499,6 @@
             </div>
           </div>
 
-          <!-- Schedule Delivery card -->
-          <div class="schedule-card" [routerLink]="['/schedule-delivery', user.userId]">
-            <div class="schedule-card-left">
-              <div class="schedule-icon">
-                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-                  <line x1="16" y1="2" x2="16" y2="6"/>
-                  <line x1="8" y1="2" x2="8" y2="6"/>
-                  <line x1="3" y1="10" x2="21" y2="10"/>
-                </svg>
-              </div>
-              <div class="schedule-text">
-                <div class="schedule-title">Schedule a Delivery</div>
-                <div class="schedule-sub">Pick a date &amp; time slot for planned shipments</div>
-              </div>
-            </div>
-            <svg width="16" height="16" fill="none" stroke="#94a3b8" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
-            </svg>
-          </div>
         </div>
 
         <!-- RIGHT: Stats + Active Tracking -->
@@ -814,17 +803,6 @@
             <div class="svc-card2-desc">Compare DTDC, Blue Dart, FedEx &amp; more — best price, fastest speed.</div>
           </div>
           <button class="svc-card2-btn svc-btn--purple">Compare →</button>
-        </div>
-
-        <div class="svc-card2 svc-card2--green" [routerLink]="['/schedule-delivery', user.userId]">
-          <div class="svc-card2-header">
-            <div class="svc-card2-icon-wrap">
-              <span class="svc-card2-icon">📅</span>
-            </div>
-            <div class="svc-card2-title">Schedule Delivery</div>
-            <div class="svc-card2-desc">Pre-book a delivery for a future date and preferred time slot.</div>
-          </div>
-          <button class="svc-card2-btn svc-btn--green">Schedule →</button>
         </div>
 
         <div class="svc-card2 svc-card2--orange" (click)="setSection('wallet')">

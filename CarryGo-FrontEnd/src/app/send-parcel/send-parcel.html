@@ -370,6 +370,14 @@
           Avg. ETA: {{ getEta() }}
         </div>
 
+        <!-- Wallet insufficient funds warning -->
+        <div class="sp-wallet-error" *ngIf="walletError">
+          <svg width="14" height="14" fill="none" stroke="#ef4444" stroke-width="2" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 8v4M12 16h.01"/>
+          </svg>
+          {{ walletError }}
+        </div>
+
         <button class="sp-book-btn" [disabled]="isSubmitting" (click)="bookDelivery()">
           <span *ngIf="isSubmitting" class="sp-spinner"></span>
           {{ isSubmitting ? 'Booking…' : 'Book Now — ₹' + totalPrice }}

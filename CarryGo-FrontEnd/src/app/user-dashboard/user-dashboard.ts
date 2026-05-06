@@ -527,6 +527,14 @@ export class UserDashboard implements OnInit, OnDestroy {
     if (this.isSubmitting || !this.user.userId) return;
     if (!this.pickupAddress.trim() || !this.dropAddress.trim()) return;
 
+    const requiredAmount = this.fareEstimate?.totalFare ?? this.estimatedPrice ?? 150;
+    if (this.wallet.balance < requiredAmount) {
+      this.walletError = `Insufficient wallet balance. Please add money to your wallet to book this delivery.`;
+      this.cdr.detectChanges();
+      return;
+    }
+    this.walletError = '';
+
     this.isSubmitting = true;
 
     const payload: any = {
@@ -589,8 +597,10 @@ export class UserDashboard implements OnInit, OnDestroy {
     this.fareEstimate = null; this.fareError = ''; this.locationError = '';
     this.bookingStep = 'idle';
     this.broadcastState = null; this.activeBookingId = null;
+    this.walletError = '';
   }
 
+  walletError = '';
   isCancelling = false;
 
   cancelBooking(): void {

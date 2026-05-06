@@ -713,3 +713,10 @@
 @media (max-width: 360px) {
   .sp-size-cards { grid-template-columns: 1fr; }
 }
+
+.sp-wallet-error {
+  display: flex; align-items: center; gap: 6px;
+  background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px;
+  padding: 10px 12px; margin-bottom: 10px;
+  font-size: 0.8rem; color: #dc2626; font-weight: 500;
+}

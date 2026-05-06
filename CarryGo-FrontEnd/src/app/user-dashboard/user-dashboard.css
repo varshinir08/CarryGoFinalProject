@@ -2473,3 +2473,16 @@
   .intercity-search-arrow { display: none; }
   .intercity-grid { grid-template-columns: repeat(2, 1fr); }
 }
+
+.wallet-error-row {
+  display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+  background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px;
+  padding: 10px 12px; margin-bottom: 10px;
+  font-size: 0.8rem; color: #dc2626; font-weight: 500;
+}
+.wallet-add-link {
+  margin-left: auto; background: none; border: none; cursor: pointer;
+  color: #2563eb; font-size: 0.8rem; font-weight: 600; padding: 0;
+  text-decoration: underline;
+}
+.wallet-add-link:hover { color: #1d4ed8; }

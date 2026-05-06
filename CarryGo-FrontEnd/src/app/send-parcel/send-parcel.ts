@@ -11,6 +11,7 @@ import { debounceTime, distinctUntilChanged, switchMap, catchError } from 'rxjs/
 import { of } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { Delivery } from '../services/delivery/delivery';
+import { Wallet } from '../services/wallet/wallet';
 import { MapPickerComponent, MapPickerResult } from '../map-picker/map-picker';
 import { ChatbotComponent } from '../chatbot/chatbot';
 
@@ -71,6 +72,10 @@ export class SendParcelComponent implements OnInit, OnDestroy {
   serviceFee      = 0;
   totalPrice      = 0;
 
+  /* ── Wallet ── */
+  walletBalance     = 0;
+  walletError       = '';
+
   /* ── State ── */
   searched          = false;
   isLoadingCommuters = false;
@@ -110,6 +115,7 @@ export class SendParcelComponent implements OnInit, OnDestroy {
   constructor(
     private authService:     AuthService,
     private deliveryService: Delivery,
+    private walletService:   Wallet,
     private router:          Router,
     private http:            HttpClient,
     private cdr:             ChangeDetectorRef,
@@ -122,6 +128,11 @@ export class SendParcelComponent implements OnInit, OnDestroy {
     this.loadHistory();
     this.setupPickupSearch();
     this.setupDropSearch();
+    if (this.user.userId) {
+      this.walletService.getWalletByUserId(this.user.userId)
+        .pipe(catchError(() => of({ balance: 0 })))
+        .subscribe((w: any) => { this.walletBalance = w?.balance ?? 0; });
+    }
   }
 
   ngOnDestroy(): void {
@@ -350,6 +361,13 @@ export class SendParcelComponent implements OnInit, OnDestroy {
   /* ── Book delivery ── */
   bookDelivery(): void {
     if (this.isSubmitting || !this.user.userId) return;
+
+    if (this.walletBalance < this.totalPrice) {
+      this.walletError = `Insufficient wallet balance. Please add money to your wallet to place this order.`;
+      this.cdr.detectChanges();
+      return;
+    }
+    this.walletError = '';
     this.isSubmitting = true;
 
     this.saveToHistory(this.pickupLocation, this.pickupLat, this.pickupLng);
