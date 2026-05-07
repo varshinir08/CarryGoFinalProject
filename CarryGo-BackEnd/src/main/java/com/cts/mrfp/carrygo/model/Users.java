@@ -42,6 +42,34 @@ public class Users {
     private Boolean isOnline = false;
     private Double avgRating;
 
+    // KYC personal
+    private String gender;
+    private String dateOfBirth;
+    private String idType;
+    private String idNumber;
+
+    // KYC address
+    private String houseNo;
+    private String street;
+    private String city;
+    private String state;
+    private String pinCode;
+
+    // KYC bank
+    private String bankAccountHolder;
+    private String bankAccountNumber;
+    private String bankIfscCode;
+    private String bankName;
+
+    // KYC status & document images (stored as Base64)
+    private String kycStatus;
+
+    @Column(columnDefinition = "MEDIUMTEXT")
+    private String idFrontImage;
+
+    @Column(columnDefinition = "MEDIUMTEXT")
+    private String idBackImage;
+
     public Users() {}
 
     public Users(Integer userId, String name, String email, String phone, String password, String role, String authProvider,
@@ -93,4 +121,52 @@ public class Users {
     public void setIsOnline(Boolean isOnline) { this.isOnline = isOnline; }
     public Double getAvgRating() { return avgRating; }
     public void setAvgRating(Double avgRating) { this.avgRating = avgRating; }
+
+    public String getGender() { return gender; }
+    public void setGender(String gender) { this.gender = gender; }
+
+    public String getDateOfBirth() { return dateOfBirth; }
+    public void setDateOfBirth(String dateOfBirth) { this.dateOfBirth = dateOfBirth; }
+
+    public String getIdType() { return idType; }
+    public void setIdType(String idType) { this.idType = idType; }
+
+    public String getIdNumber() { return idNumber; }
+    public void setIdNumber(String idNumber) { this.idNumber = idNumber; }
+
+    public String getHouseNo() { return houseNo; }
+    public void setHouseNo(String houseNo) { this.houseNo = houseNo; }
+
+    public String getStreet() { return street; }
+    public void setStreet(String street) { this.street = street; }
+
+    public String getCity() { return city; }
+    public void setCity(String city) { this.city = city; }
+
+    public String getState() { return state; }
+    public void setState(String state) { this.state = state; }
+
+    public String getPinCode() { return pinCode; }
+    public void setPinCode(String pinCode) { this.pinCode = pinCode; }
+
+    public String getBankAccountHolder() { return bankAccountHolder; }
+    public void setBankAccountHolder(String bankAccountHolder) { this.bankAccountHolder = bankAccountHolder; }
+
+    public String getBankAccountNumber() { return bankAccountNumber; }
+    public void setBankAccountNumber(String bankAccountNumber) { this.bankAccountNumber = bankAccountNumber; }
+
+    public String getBankIfscCode() { return bankIfscCode; }
+    public void setBankIfscCode(String bankIfscCode) { this.bankIfscCode = bankIfscCode; }
+
+    public String getBankName() { return bankName; }
+    public void setBankName(String bankName) { this.bankName = bankName; }
+
+    public String getKycStatus() { return kycStatus; }
+    public void setKycStatus(String kycStatus) { this.kycStatus = kycStatus; }
+
+    public String getIdFrontImage() { return idFrontImage; }
+    public void setIdFrontImage(String idFrontImage) { this.idFrontImage = idFrontImage; }
+
+    public String getIdBackImage() { return idBackImage; }
+    public void setIdBackImage(String idBackImage) { this.idBackImage = idBackImage; }
 }

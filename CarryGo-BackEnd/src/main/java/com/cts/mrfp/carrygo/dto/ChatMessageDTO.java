@@ -6,10 +6,14 @@ public class ChatMessageDTO {
     private Long id;
     private Integer deliveryId;
     private Integer senderId;
+    private Integer receiverId;
     private String senderName;
     private String senderRole;
+    private String messageType;
     private String message;
     private LocalDateTime sentAt;
+    private Boolean isRead;
+    private LocalDateTime readAt;
 
     public ChatMessageDTO() {}
 
@@ -33,4 +37,16 @@ public class ChatMessageDTO {
 
     public LocalDateTime getSentAt()        { return sentAt; }
     public void setSentAt(LocalDateTime v)  { this.sentAt = v; }
+
+    public Integer getReceiverId()          { return receiverId; }
+    public void setReceiverId(Integer v)    { this.receiverId = v; }
+
+    public String getMessageType()          { return messageType; }
+    public void setMessageType(String v)    { this.messageType = v; }
+
+    public Boolean getIsRead()              { return isRead; }
+    public void setIsRead(Boolean v)        { this.isRead = v; }
+
+    public LocalDateTime getReadAt()        { return readAt; }
+    public void setReadAt(LocalDateTime v)  { this.readAt = v; }
 }

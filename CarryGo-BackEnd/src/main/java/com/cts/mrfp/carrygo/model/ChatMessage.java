@@ -18,10 +18,17 @@ public class ChatMessage {
     /** "USER" or "PORTER" */
     private String senderRole;
 
+    private Integer receiverId;
+
+    /** "TEXT", "IMAGE", or "SYSTEM" */
+    private String messageType;
+
     @Column(length = 1000)
     private String message;
 
     private LocalDateTime sentAt;
+    private Boolean isRead = false;
+    private LocalDateTime readAt;
 
     public ChatMessage() {}
 
@@ -45,4 +52,16 @@ public class ChatMessage {
 
     public LocalDateTime getSentAt()       { return sentAt; }
     public void setSentAt(LocalDateTime v) { this.sentAt = v; }
+
+    public Integer getReceiverId()           { return receiverId; }
+    public void setReceiverId(Integer v)     { this.receiverId = v; }
+
+    public String getMessageType()           { return messageType; }
+    public void setMessageType(String v)     { this.messageType = v; }
+
+    public Boolean getIsRead()               { return isRead; }
+    public void setIsRead(Boolean v)         { this.isRead = v; }
+
+    public LocalDateTime getReadAt()         { return readAt; }
+    public void setReadAt(LocalDateTime v)   { this.readAt = v; }
 }

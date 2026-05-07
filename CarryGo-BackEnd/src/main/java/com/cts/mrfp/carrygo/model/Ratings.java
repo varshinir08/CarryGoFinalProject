@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 public class Ratings {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="service_id")
+    @Column(name="rating_id")
     private Integer ratingId;
 
     @ManyToOne(fetch = FetchType.LAZY)

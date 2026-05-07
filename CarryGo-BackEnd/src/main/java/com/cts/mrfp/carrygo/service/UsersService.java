@@ -112,13 +112,33 @@ public class UsersService {
         Optional<Users> existing = usersRepository.findById(userId);
         if (existing.isPresent()) {
             Users u = existing.get();
-            if (dto.getName()          != null) u.setName(dto.getName());
-            if (dto.getPhone()         != null) u.setPhone(dto.getPhone());
-            if (dto.getVehicleType()   != null) u.setVehicleType(dto.getVehicleType());
-            if (dto.getVehicleNumber() != null) u.setVehicleNumber(dto.getVehicleNumber());
-            if (dto.getVehicleModel()  != null) u.setVehicleModel(dto.getVehicleModel());
-            if (dto.getLicenceNumber() != null) u.setLicenceNumber(dto.getLicenceNumber());
-            if (dto.getLicenceExpiry() != null) u.setLicenceExpiry(dto.getLicenceExpiry());
+            if (dto.getName()               != null) u.setName(dto.getName());
+            if (dto.getPhone()              != null) u.setPhone(dto.getPhone());
+            if (dto.getVehicleType()        != null) u.setVehicleType(dto.getVehicleType());
+            if (dto.getVehicleNumber()      != null) u.setVehicleNumber(dto.getVehicleNumber());
+            if (dto.getVehicleModel()       != null) u.setVehicleModel(dto.getVehicleModel());
+            if (dto.getLicenceNumber()      != null) u.setLicenceNumber(dto.getLicenceNumber());
+            if (dto.getLicenceExpiry()      != null) u.setLicenceExpiry(dto.getLicenceExpiry());
+            // KYC personal
+            if (dto.getGender()             != null) u.setGender(dto.getGender());
+            if (dto.getDateOfBirth()        != null) u.setDateOfBirth(dto.getDateOfBirth());
+            if (dto.getIdType()             != null) u.setIdType(dto.getIdType());
+            if (dto.getIdNumber()           != null) u.setIdNumber(dto.getIdNumber());
+            // KYC address
+            if (dto.getHouseNo()            != null) u.setHouseNo(dto.getHouseNo());
+            if (dto.getStreet()             != null) u.setStreet(dto.getStreet());
+            if (dto.getCity()               != null) u.setCity(dto.getCity());
+            if (dto.getState()              != null) u.setState(dto.getState());
+            if (dto.getPinCode()            != null) u.setPinCode(dto.getPinCode());
+            // KYC bank
+            if (dto.getBankAccountHolder()  != null) u.setBankAccountHolder(dto.getBankAccountHolder());
+            if (dto.getBankAccountNumber()  != null) u.setBankAccountNumber(dto.getBankAccountNumber());
+            if (dto.getBankIfscCode()       != null) u.setBankIfscCode(dto.getBankIfscCode());
+            if (dto.getBankName()           != null) u.setBankName(dto.getBankName());
+            // KYC status & images
+            if (dto.getKycStatus()          != null) u.setKycStatus(dto.getKycStatus());
+            if (dto.getIdFrontImage()       != null) u.setIdFrontImage(dto.getIdFrontImage());
+            if (dto.getIdBackImage()        != null) u.setIdBackImage(dto.getIdBackImage());
             usersRepository.save(u);
             return Optional.of(u);
         }

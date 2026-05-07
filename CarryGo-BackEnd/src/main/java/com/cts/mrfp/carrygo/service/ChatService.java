@@ -18,13 +18,21 @@ public class ChatService {
 
     public ChatMessageDTO send(Integer deliveryId, Integer senderId,
                                String senderName, String senderRole, String message) {
+        return send(deliveryId, senderId, null, senderName, senderRole, "TEXT", message);
+    }
+
+    public ChatMessageDTO send(Integer deliveryId, Integer senderId, Integer receiverId,
+                               String senderName, String senderRole, String messageType, String message) {
         ChatMessage msg = new ChatMessage();
         msg.setDeliveryId(deliveryId);
         msg.setSenderId(senderId);
+        msg.setReceiverId(receiverId);
         msg.setSenderName(senderName);
         msg.setSenderRole(senderRole);
+        msg.setMessageType(messageType != null ? messageType : "TEXT");
         msg.setMessage(message);
         msg.setSentAt(LocalDateTime.now());
+        msg.setIsRead(false);
         ChatMessageDTO dto = toDTO(repo.save(msg));
         wsService.pushToChat(deliveryId, dto);
         return dto;
@@ -40,10 +48,14 @@ public class ChatService {
         d.setId(m.getId());
         d.setDeliveryId(m.getDeliveryId());
         d.setSenderId(m.getSenderId());
+        d.setReceiverId(m.getReceiverId());
         d.setSenderName(m.getSenderName());
         d.setSenderRole(m.getSenderRole());
+        d.setMessageType(m.getMessageType());
         d.setMessage(m.getMessage());
         d.setSentAt(m.getSentAt());
+        d.setIsRead(m.getIsRead());
+        d.setReadAt(m.getReadAt());
         return d;
     }
 }

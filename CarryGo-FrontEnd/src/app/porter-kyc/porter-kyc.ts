@@ -289,13 +289,35 @@ export class PorterKycComponent implements OnInit {
     this.isSubmitting = true;
 
     const payload = {
-      name:          this.form.fullName,
-      phone:         this.form.phone,
-      vehicleType:   this.form.vehicleType,
-      vehicleModel:  this.form.vehicleModel,
-      vehicleNumber: this.form.vehicleRegNo,
-      licenceNumber: this.form.licenceNumber,
-      licenceExpiry: this.form.licenceExpiry
+      // Personal
+      name:               this.form.fullName,
+      phone:              this.form.phone,
+      gender:             this.form.gender,
+      dateOfBirth:        this.form.dob,
+      // Identity
+      idType:             this.form.idType,
+      idNumber:           this.form.idNumber,
+      idFrontImage:       this.form.idFrontPreview || null,
+      idBackImage:        this.form.idBackPreview  || null,
+      // Address
+      houseNo:            this.form.houseNo,
+      street:             this.form.street,
+      city:               this.form.city,
+      state:              this.form.state,
+      pinCode:            this.form.pinCode,
+      // Vehicle
+      vehicleType:        this.form.vehicleType,
+      vehicleModel:       this.form.vehicleModel,
+      vehicleNumber:      this.form.vehicleRegNo,
+      licenceNumber:      this.form.licenceNumber,
+      licenceExpiry:      this.form.licenceExpiry,
+      // Bank
+      bankAccountHolder:  this.form.accountHolder,
+      bankAccountNumber:  this.form.accountNumber,
+      bankIfscCode:       this.form.ifscCode,
+      bankName:           this.form.bankName,
+      // Status
+      kycStatus:          'VERIFIED'
     };
 
     this.http.put(`${this.apiBase}/users/${this.porterProfile.userId}`, payload).subscribe({
