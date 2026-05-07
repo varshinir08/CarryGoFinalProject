@@ -607,10 +607,23 @@ export class UserDashboard implements OnInit, OnDestroy {
     if (!this.activeBookingId || this.isCancelling) return;
     if (!confirm('Are you sure you want to cancel this booking?')) return;
     this.isCancelling = true;
+
+    // Capture refund amount before resetting state
+    const booking = this.deliveries.find((d: any) => d.deliveryId === this.activeBookingId);
+    const refundAmt = booking?.totalAmount ?? this.estimatedPrice ?? 0;
+
     this.deliveryService.updateDeliveryStatus(this.activeBookingId, 'CANCELLED')
       .pipe(catchError(() => of(null)))
       .subscribe(() => {
         this.isCancelling = false;
+
+        // Refund the deducted amount back to the wallet
+        if (refundAmt > 0 && this.user.userId) {
+          this.wallet.balance += refundAmt;
+          this.addTxn({ type: 'credit', amount: refundAmt, description: 'Booking Cancelled - Refund', method: 'CarryGo Wallet' });
+          this.walletService.topUp(this.user.userId, refundAmt).pipe(catchError(() => of(null))).subscribe();
+        }
+
         this.resetForm();
         this.loadData();
         this.cdr.detectChanges();
@@ -975,13 +988,17 @@ export class UserDashboard implements OnInit, OnDestroy {
     if (!el) return;
 
     if (!this.leafletLib) {
-      this.leafletLib = await import('leaflet');
-      delete (this.leafletLib.Icon.Default.prototype as any)._getIconUrl;
-      this.leafletLib.Icon.Default.mergeOptions({
-        iconUrl:       'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
-        iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
-        shadowUrl:     'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
-      });
+      const leafletModule = await import('leaflet');
+      // Production builds may wrap the module in a `default` property
+      this.leafletLib = (leafletModule as any).default ?? leafletModule;
+      if (this.leafletLib?.Icon?.Default) {
+        delete (this.leafletLib.Icon.Default.prototype as any)._getIconUrl;
+        this.leafletLib.Icon.Default.mergeOptions({
+          iconUrl:       'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+          iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
+          shadowUrl:     'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+        });
+      }
     }
     const L = this.leafletLib;
 

@@ -47,6 +47,14 @@
         Services
       </a>
 
+      <a class="nav-item" routerLink="/user-profile">
+        <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <circle cx="12" cy="8" r="4"/>
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+        </svg>
+        My Profile
+      </a>
+
     </nav>
 
     <div class="sidebar-footer">
@@ -103,6 +111,13 @@
               </div>
             </div>
             <hr>
+            <a class="dropdown-profile-link" routerLink="/user-profile" (click)="profileDropOpen = false">
+              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <circle cx="12" cy="8" r="4"/>
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+              </svg>
+              My Profile
+            </a>
             <button class="dropdown-logout" (click)="logout()">
               <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round"

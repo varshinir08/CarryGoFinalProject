@@ -62,7 +62,9 @@
       <div class="password-wrapper">
         <input id="password" [(ngModel)]="user.password" name="password"
                [type]="showPassword ? 'text' : 'password'" placeholder="Password"
-               required minlength="6" #password="ngModel"/>
+               required
+               pattern="^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()\-_+=\[\]{};:',.<>/?]).{8,}$"
+               #password="ngModel"/>
         <button type="button" class="pwd-toggle" (click)="showPassword = !showPassword" tabindex="-1">
           <svg *ngIf="showPassword" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
@@ -72,8 +74,8 @@
           </svg>
         </button>
       </div>
-      <div class="error" *ngIf="password.errors?.['minlength'] && password.touched">
-        Password must be at least 6 characters
+      <div class="error" *ngIf="password.errors?.['pattern'] && password.touched">
+        Min 8 chars with at least 1 uppercase, 1 number &amp; 1 special character
       </div>
     </div>
 

@@ -7,6 +7,7 @@ import { PorterDeliveriesComponent } from './porter-deliveries/porter-deliveries
 import { PorterKycComponent } from './porter-kyc/porter-kyc';
 import { PorterRoutesComponent } from './porter-routes/porter-routes';
 import { PorterProfileComponent } from './porter-profile/porter-profile';
+import { UserProfileComponent } from './user-profile/user-profile';
 import { AuthGuard } from './services/auth.guard';
 import { PorterGuard } from './services/porter.guard';
 import { SendParcelComponent } from './send-parcel/send-parcel';
@@ -18,6 +19,8 @@ export const routes: Routes = [
   { path: 'register', component: Register },
   { path: 'user-dashboard/:userId', component: UserDashboard, canActivate: [AuthGuard] },
   { path: 'user-dashboard', component: UserDashboard, canActivate: [AuthGuard] },
+  { path: 'user-profile/:userId', component: UserProfileComponent, canActivate: [AuthGuard] },
+  { path: 'user-profile', component: UserProfileComponent, canActivate: [AuthGuard] },
   { path: 'send-parcel/:userId', component: SendParcelComponent, canActivate: [AuthGuard] },
   { path: 'send-parcel', component: SendParcelComponent, canActivate: [AuthGuard] },
   { path: 'commuter-register/:userId', component: CommuterRegisterComponent, canActivate: [AuthGuard] },
