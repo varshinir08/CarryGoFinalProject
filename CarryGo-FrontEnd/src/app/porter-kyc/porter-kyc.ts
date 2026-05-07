@@ -125,6 +125,16 @@ export class PorterKycComponent implements OnInit {
     private cdr: ChangeDetectorRef
   ) {}
 
+  get isKycVerified(): boolean {
+    return !!(
+      this.porterProfile?.vehicleType &&
+      this.porterProfile?.vehicleNumber &&
+      this.porterProfile?.vehicleModel &&
+      this.porterProfile?.licenceNumber &&
+      this.porterProfile?.licenceExpiry
+    );
+  }
+
   ngOnInit(): void {
     const email = this.authService.getLoggedInUserEmail();
     if (!email) { this.router.navigate(['/login']); return; }
@@ -133,9 +143,23 @@ export class PorterKycComponent implements OnInit {
         this.porterProfile = p;
         this.statusService.init(p.userId);
         this.generateInitials(p.name);
-        this.form.fullName = p.name  ?? '';
-        this.form.phone    = p.phone ?? '';
-        this.form.email    = p.email ?? '';
+
+        // Pre-fill all available DB fields into the form
+        this.form.fullName      = p.name          ?? '';
+        this.form.phone         = p.phone         ?? '';
+        this.form.email         = p.email         ?? '';
+        this.form.vehicleType   = p.vehicleType   ?? '';
+        this.form.vehicleModel  = p.vehicleModel  ?? '';
+        this.form.vehicleRegNo  = p.vehicleNumber ?? '';
+        this.form.licenceNumber = p.licenceNumber ?? '';
+        this.form.licenceExpiry = p.licenceExpiry ? String(p.licenceExpiry) : '';
+
+        // If vehicle & licence data already exist, skip straight to verified screen
+        if (this.isKycVerified) {
+          this.currentStep = 6;
+          this.submitted   = true;
+        }
+
         this.loadPendingOrders(p.userId);
         this.cdr.detectChanges();
         this.userService.getWalletByUserId(p.userId).subscribe({

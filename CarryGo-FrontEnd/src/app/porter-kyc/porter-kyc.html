@@ -117,7 +117,7 @@
       </div>
     </header>
 
-    <div *ngIf="!isOnline" class="offline-placeholder">
+    <div *ngIf="!isOnline && !submitted" class="offline-placeholder">
       <div class="offline-icon">
         <svg viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="1.5" width="48" height="48">
           <path stroke-linecap="round" stroke-linejoin="round" d="M18.364 5.636a9 9 0 010 12.728M5.636 5.636a9 9 0 000 12.728M9 10a3 3 0 116 0M3 3l18 18"/>
@@ -127,7 +127,7 @@
       <p class="offline-sub">Toggle online to access KYC Verification</p>
     </div>
 
-    <div class="kyc-body" *ngIf="isOnline">
+    <div class="kyc-body" *ngIf="isOnline || submitted">
 
       <!-- ── Stepper ──────────────────────────────────────────────── -->
       <div class="stepper-wrap">
@@ -577,19 +577,29 @@
           </div>
         </div>
 
-        <!-- ━━ STEP 7: Review / Success ━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+        <!-- ━━ STEP 7: KYC Accepted & Verified ━━━━━━━━━━━━━━━━━━━━━ -->
         <div *ngIf="currentStep === 6" class="step-panel">
+
+          <!-- Big verified hero -->
           <div class="success-hero">
-            <div class="success-ring">
-              <svg viewBox="0 0 24 24" fill="none" stroke="#1a9a6c" stroke-width="2.5" width="36" height="36">
+            <div class="success-ring verified-ring">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" width="40" height="40">
                 <polyline points="20 6 9 17 4 12"/>
               </svg>
             </div>
-            <h2 class="success-title">KYC Verified Successfully!</h2>
-            <p class="success-sub">Your details have been saved. You're all set to start accepting deliveries!</p>
+            <div class="verified-pill">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              </svg>
+              KYC Accepted &amp; Verified
+            </div>
+            <h2 class="success-title">You're all set!</h2>
+            <p class="success-sub">Your KYC has been verified and accepted. You can now accept delivery requests.</p>
           </div>
 
+          <!-- Verified details from DB -->
           <div class="review-list">
+
             <div class="review-row">
               <div class="review-icon bg-blue">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
@@ -598,10 +608,14 @@
               </div>
               <div class="review-info">
                 <div class="review-name">Personal Information</div>
-                <div class="review-desc">{{ form.fullName }} · {{ form.phone }}</div>
+                <div class="review-desc">{{ porterProfile?.name }} · {{ porterProfile?.phone }}</div>
               </div>
-              <span class="rev-tag tag-done">Submitted</span>
+              <span class="rev-tag tag-verified">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="11" height="11"><polyline points="20 6 9 17 4 12"/></svg>
+                Verified
+              </span>
             </div>
+
             <div class="review-row">
               <div class="review-icon bg-purple">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
@@ -610,22 +624,14 @@
               </div>
               <div class="review-info">
                 <div class="review-name">Identity Documents</div>
-                <div class="review-desc">{{ form.idType }} · {{ form.idNumber }}</div>
+                <div class="review-desc">Documents submitted &amp; accepted</div>
               </div>
-              <span class="rev-tag tag-review">Under review</span>
+              <span class="rev-tag tag-verified">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="11" height="11"><polyline points="20 6 9 17 4 12"/></svg>
+                Accepted
+              </span>
             </div>
-            <div class="review-row">
-              <div class="review-icon bg-orange">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
-                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
-                </svg>
-              </div>
-              <div class="review-info">
-                <div class="review-name">Address</div>
-                <div class="review-desc">{{ form.city }}, {{ form.state }} – {{ form.pinCode }}</div>
-              </div>
-              <span class="rev-tag tag-done">Submitted</span>
-            </div>
+
             <div class="review-row">
               <div class="review-icon bg-teal">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
@@ -635,10 +641,35 @@
               </div>
               <div class="review-info">
                 <div class="review-name">Vehicle &amp; Licence</div>
-                <div class="review-desc">{{ form.vehicleModel }} · {{ form.vehicleRegNo }}</div>
+                <div class="review-desc">
+                  {{ porterProfile?.vehicleType | titlecase }} · {{ porterProfile?.vehicleModel }} · {{ porterProfile?.vehicleNumber }}
+                </div>
               </div>
-              <span class="rev-tag tag-review">Under review</span>
+              <span class="rev-tag tag-verified">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="11" height="11"><polyline points="20 6 9 17 4 12"/></svg>
+                Verified
+              </span>
             </div>
+
+            <div class="review-row">
+              <div class="review-icon bg-orange">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                  <rect x="2" y="3" width="20" height="14" rx="2"/>
+                  <path d="M8 21h8M12 17v4"/>
+                </svg>
+              </div>
+              <div class="review-info">
+                <div class="review-name">Driving Licence</div>
+                <div class="review-desc">
+                  {{ porterProfile?.licenceNumber }} · Expires {{ porterProfile?.licenceExpiry }}
+                </div>
+              </div>
+              <span class="rev-tag tag-verified">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="11" height="11"><polyline points="20 6 9 17 4 12"/></svg>
+                Verified
+              </span>
+            </div>
+
             <div class="review-row">
               <div class="review-icon bg-green">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
@@ -647,15 +678,21 @@
               </div>
               <div class="review-info">
                 <div class="review-name">Bank Account</div>
-                <div class="review-desc">{{ form.bankName }} · {{ form.ifscCode }}</div>
+                <div class="review-desc">Bank details submitted &amp; on file</div>
               </div>
-              <span class="rev-tag tag-done">Submitted</span>
+              <span class="rev-tag tag-verified">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="11" height="11"><polyline points="20 6 9 17 4 12"/></svg>
+                Accepted
+              </span>
             </div>
+
           </div>
 
           <div class="btn-row" style="margin-top:24px">
-            <button class="btn-back" (click)="back()">&#8592; Edit details</button>
-            <button class="btn-next" routerLink="/porter-dashboard">Go to Dashboard &#8594;</button>
+            <button class="btn-next"
+              [routerLink]="porterProfile ? ['/porter-dashboard', porterProfile.userId] : ['/porter-dashboard']">
+              Go to Dashboard &#8594;
+            </button>
           </div>
         </div>
 
