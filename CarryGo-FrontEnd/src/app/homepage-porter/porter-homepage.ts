@@ -768,13 +768,17 @@ export class PorterDashboardComponent implements OnInit, OnDestroy, AfterViewIni
     if (!el) return;
 
     if (!this.navMapLib) {
-      this.navMapLib = await import('leaflet');
-      delete (this.navMapLib.Icon.Default.prototype as any)._getIconUrl;
-      this.navMapLib.Icon.Default.mergeOptions({
-        iconUrl:       'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
-        iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
-        shadowUrl:     'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
-      });
+      const leafletModule = await import('leaflet');
+      // Production builds may wrap the module in a `default` property
+      this.navMapLib = (leafletModule as any).default ?? leafletModule;
+      if (this.navMapLib?.Icon?.Default) {
+        delete (this.navMapLib.Icon.Default.prototype as any)._getIconUrl;
+        this.navMapLib.Icon.Default.mergeOptions({
+          iconUrl:       'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+          iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
+          shadowUrl:     'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+        });
+      }
     }
 
     const L = this.navMapLib;

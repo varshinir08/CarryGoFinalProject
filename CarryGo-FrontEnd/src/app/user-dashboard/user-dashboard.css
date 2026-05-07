@@ -213,13 +213,6 @@
 .dropdown-name { font-size: 13px; font-weight: 600; color: #1a1a1a; }
 .dropdown-email { font-size: 11px; color: #888; }
 .profile-dropdown hr { border: none; border-top: 1px solid #f0f0f0; margin: 8px 0; }
-.dropdown-profile-link {
-  display: flex; align-items: center; gap: 8px;
-  width: 100%; padding: 8px 10px;
-  border-radius: 8px; background: none; text-decoration: none;
-  color: #374151; font-size: 13px; font-weight: 500; cursor: pointer;
-}
-.dropdown-profile-link:hover { background: #f0f7ff; color: #2563eb; }
 .dropdown-logout {
   display: flex; align-items: center; gap: 8px;
   width: 100%; padding: 8px 10px;
