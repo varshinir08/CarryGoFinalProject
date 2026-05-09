@@ -96,7 +96,7 @@ export class PorterProfileComponent implements OnInit {
     flexibleSchedule: true,
   };
 
-  private readonly apiBase = 'https://carrygo-production.up.railway.app/api';
+  private readonly apiBase = 'http://localhost:8081/api';
 
   constructor(
     private authService: AuthService,
