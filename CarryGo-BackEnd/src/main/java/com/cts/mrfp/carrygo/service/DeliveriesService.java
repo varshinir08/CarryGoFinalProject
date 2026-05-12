@@ -45,7 +45,6 @@ public class DeliveriesService {
         saved = deliveriesRepo.save(saved);
 
         DeliveriesDTO savedDTO = DTOConverter.convertDeliveriesToDTO(saved);
-
         // Broadcast new ride request to ALL connected porters via WebSocket topic
         wsService.pushToPorters("rideRequest", savedDTO);
 
@@ -240,14 +239,12 @@ public class DeliveriesService {
         n.setCreatedAt(LocalDateTime.now());
         notificationsRepo.save(n);
     }
-
     private Map<String, Object> buildBroadcastState(Deliveries d, boolean exhausted) {
         int pool       = d.getTotalPool()      != null ? d.getTotalPool()      : 0;
         int notified   = d.getTotalNotified()  != null ? d.getTotalNotified()  : 0;
         int rejected   = d.getTotalRejected()  != null ? d.getTotalRejected()  : 0;
         int pending    = Math.max(0, notified - rejected);
         int pct        = (notified == 0) ? 0 : (notified * 100 / Math.max(pool, 1));
-
         Map<String, Object> state = new LinkedHashMap<>();
         state.put("deliveryId",      d.getDeliveryId());
         state.put("status",          exhausted ? "no_drivers" : "searching");

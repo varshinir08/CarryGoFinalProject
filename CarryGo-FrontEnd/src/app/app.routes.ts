@@ -5,7 +5,6 @@ import { UserDashboard } from './user-dashboard/user-dashboard';
 import { PorterDashboardComponent } from './homepage-porter/porter-homepage';
 import { PorterDeliveriesComponent } from './porter-deliveries/porter-deliveries';
 import { PorterKycComponent } from './porter-kyc/porter-kyc';
-import { PorterRoutesComponent } from './porter-routes/porter-routes';
 import { PorterProfileComponent } from './porter-profile/porter-profile';
 import { AuthGuard } from './services/auth.guard';
 import { PorterGuard } from './services/porter.guard';
@@ -28,8 +27,6 @@ export const routes: Routes = [
   { path: 'porter-deliveries', component: PorterDeliveriesComponent, canActivate: [PorterGuard] },
   { path: 'porter-kyc/:userId', component: PorterKycComponent, canActivate: [PorterGuard] },
   { path: 'porter-kyc', component: PorterKycComponent, canActivate: [PorterGuard] },
-  { path: 'porter-routes/:userId', component: PorterRoutesComponent, canActivate: [PorterGuard] },
-  { path: 'porter-routes', component: PorterRoutesComponent, canActivate: [PorterGuard] },
   { path: 'porter-profile/:userId', component: PorterProfileComponent, canActivate: [PorterGuard] },
   { path: 'porter-profile', component: PorterProfileComponent, canActivate: [PorterGuard] },
   { path: '**', redirectTo: '/login' }

@@ -9,7 +9,6 @@
     </a>
     <img src="assets/images/carrygo-logo.png" alt="CarryGo" class="sp-logo">
   </header>
-
   <!-- ════ BODY ════ -->
   <div class="sp-body">
 
@@ -296,15 +295,24 @@
         <a routerLink="/schedule-delivery" class="sp-schedule-link">Schedule it →</a>
       </div>
 
-      <!-- Find Commuters button -->
-      <button class="sp-find-btn" [disabled]="!canSearch || isLoadingCommuters" (click)="findCommuters()">
-        <span *ngIf="isLoadingCommuters" class="sp-spinner"></span>
-        <svg *ngIf="!isLoadingCommuters" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round"
-            d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
-        </svg>
-        {{ isLoadingCommuters ? 'Searching…' : 'Find Available Commuters' }}
-      </button>
+      <!-- Action buttons -->
+      <div class="sp-actions-row">
+        <button class="sp-find-btn" [disabled]="!canSearch || isLoadingCommuters" (click)="findCommuters()">
+          <span *ngIf="isLoadingCommuters" class="sp-spinner"></span>
+          <svg *ngIf="!isLoadingCommuters" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
+          </svg>
+          {{ isLoadingCommuters ? 'Searching…' : 'Find Available Commuters' }}
+        </button>
+        <button type="button" class="sp-reset-btn" (click)="resetForm()">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M4 4v6h6M20 20v-6h-6M5 19a9 9 0 0014.65-3.6M19 5A9 9 0 004.35 8.6"/>
+          </svg>
+          Reset
+        </button>
+      </div>
     </div>
 
     <!-- ══ RIGHT: Summary Panel ══ -->
@@ -392,7 +400,6 @@
           <span>₹{{ basePrice }}</span>
         </div>
         <div class="sp-price-row">
-          <span>Distance cost ({{ distanceKm }} km)</span>
           <span>₹{{ distanceCost }}</span>
         </div>
         <div class="sp-price-row">

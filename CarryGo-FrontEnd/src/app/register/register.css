@@ -184,6 +184,32 @@ input:focus, select:focus {
   cursor: not-allowed;
 }
 
+/* Reset (secondary) button */
+.form-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 4px;
+}
+.form-actions .btn-primary { flex: 1; margin-top: 0; }
+
+.btn-secondary {
+  flex: 0 0 auto;
+  padding: 12px 18px;
+  background: #fff;
+  color: #64748b;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-secondary:hover {
+  border-color: #ef4444;
+  color: #ef4444;
+  background: #fef2f2;
+}
+
 /* Social login */
 .alt-register {
   margin-top: 20px;

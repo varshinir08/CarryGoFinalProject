@@ -3,6 +3,7 @@ import {
   Inject, PLATFORM_ID, HostListener, ElementRef
 } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
+import {FareService} from '../services/fare.service';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -116,6 +117,7 @@ export class SendParcelComponent implements OnInit, OnDestroy {
     private authService:     AuthService,
     private deliveryService: Delivery,
     private walletService:   Wallet,
+    private fareService:     FareService,
     private router:          Router,
     private http:            HttpClient,
     private cdr:             ChangeDetectorRef,
@@ -216,6 +218,8 @@ export class SendParcelComponent implements OnInit, OnDestroy {
     this.searched = false;
     this.pickupLat = undefined;
     this.pickupLng = undefined;
+     this.distanceKm = 0;
+      this.totalPrice = 0;
     const q = this.pickupLocation.trim();
     if (!q) {
       this.pickupSuggestions = this.history.slice(0, 5).map(h => ({ ...h, type: 'history' as const }));
@@ -240,6 +244,7 @@ export class SendParcelComponent implements OnInit, OnDestroy {
     this.pickupLng      = s.lng;
     this.showPickupDrop = false;
     this.pickupSuggestions = [];
+     this.tryFetchFare();
   }
 
   /* ── Drop autocomplete ── */
@@ -268,6 +273,8 @@ export class SendParcelComponent implements OnInit, OnDestroy {
     this.searched = false;
     this.dropLat = undefined;
     this.dropLng = undefined;
+    this.distanceKm = 0;
+      this.totalPrice = 0;
     const q = this.dropLocation.trim();
     if (!q) {
       this.dropSuggestions = this.history.slice(0, 5).map(h => ({ ...h, type: 'history' as const }));
@@ -292,6 +299,7 @@ export class SendParcelComponent implements OnInit, OnDestroy {
     this.dropLng      = s.lng;
     this.showDropDrop = false;
     this.dropSuggestions = [];
+     this.tryFetchFare();
   }
 
   /* ── Map picker ── */
@@ -323,10 +331,7 @@ export class SendParcelComponent implements OnInit, OnDestroy {
   /* ── Price calc ── */
   recalcPrice(): void {
     if (!this.distanceKm) {
-      const a = (this.pickupLocation + this.dropLocation).toLowerCase();
-      let h = 0;
-      for (let i = 0; i < a.length; i++) h = ((h << 5) - h + a.charCodeAt(i)) | 0;
-      this.distanceKm = Math.round((2 + (Math.abs(h) % 280) / 10) * 10) / 10;
+      return;
     }
     const express     = this.deliveryType === 'express' ? 1.5 : 1;
     this.basePrice    = Math.round(40 * express);
@@ -334,7 +339,6 @@ export class SendParcelComponent implements OnInit, OnDestroy {
     this.serviceFee   = Math.round(15 * express);
     this.totalPrice   = this.basePrice + this.distanceCost + this.serviceFee;
   }
-
   /**
    * Queries the backend for real matching online porters.
    * Falls back to 0 if the API is unreachable.
@@ -347,7 +351,7 @@ export class SendParcelComponent implements OnInit, OnDestroy {
     this.searched          = false;
     this.isLoadingCommuters = true;
     this.cdr.detectChanges();
-
+  this.tryFetchFare();
     this.deliveryService.getMatchingPortersCount(
       this.pickupLat, this.pickupLng, this.dropLat, this.dropLng
     ).pipe(catchError(() => of(0))).subscribe(count => {
@@ -413,11 +417,67 @@ export class SendParcelComponent implements OnInit, OnDestroy {
     });
   }
 
+private tryFetchFare(): void {
+    if (!this.pickupLat || !this.pickupLng || !this.dropLat || !this.dropLng) return; // wait for both
+  this.fareService.estimate(
+    this.pickupLat, this.pickupLng,
+    this.dropLat,   this.dropLng
+  ).subscribe(res => {
+    this.distanceKm   = res.distanceKm;
+    this.basePrice    = res.baseFare;
+    this.distanceCost = res.distanceFare;
+    this.serviceFee   = res.zoneSurcharge;
+    this.totalPrice   = res.totalFare;
+    this.cdr.detectChanges();
+  });
+}
   get canSearch(): boolean {
     return this.pickupLocation.trim().length > 0 && this.dropLocation.trim().length > 0;
   }
 
   getEta(): string {
     return this.deliveryType === 'express' ? '30–90 mins' : '2–4 hours';
+  }
+
+  /* ── Reset entire form ── */
+  resetForm(): void {
+    this.pickupLocation = '';
+    this.pickupLat = undefined;
+    this.pickupLng = undefined;
+    this.contactName = '';
+    this.contactPhone = '';
+
+    this.dropLocation = '';
+    this.dropLat = undefined;
+    this.dropLng = undefined;
+    this.receiverName = '';
+    this.receiverPhone = '';
+
+    this.packageType = '';
+    this.weightKg = 1;
+    this.packageSize = 'medium';
+    this.specialInstructions = '';
+
+    this.deliveryType = 'standard';
+    this.preferredDate = '';
+    this.preferredTime = '';
+    this.flexibleMatching = true;
+
+    this.distanceKm = 0;
+    this.basePrice = 0;
+    this.distanceCost = 0;
+    this.serviceFee = 0;
+    this.totalPrice = 0;
+
+    this.walletError = '';
+    this.searched = false;
+    this.commuterCount = 0;
+
+    this.pickupSuggestions = [];
+    this.dropSuggestions = [];
+    this.showPickupDrop = false;
+    this.showDropDrop = false;
+
+    this.cdr.detectChanges();
   }
 }

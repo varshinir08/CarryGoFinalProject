@@ -374,6 +374,34 @@
 }
 .btn-back:hover { background: #f5f5f5; }
 
+.btn-reset {
+  padding: 11px 18px;
+  border-radius: 10px;
+  border: 1.5px solid #fed7aa;
+  background: #fff;
+  color: #ea580c;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .15s, border-color .15s;
+}
+.btn-reset:hover { background: #fff7ed; border-color: #fdba74; }
+
+.btn-reset-all {
+  padding: 11px 18px;
+  border-radius: 10px;
+  border: 1.5px solid #fecaca;
+  background: #fff;
+  color: #dc2626;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .15s, border-color .15s;
+}
+.btn-reset-all:hover { background: #fef2f2; border-color: #fca5a5; }
+
+.btn-row .btn-next { margin-left: auto; }
+
 .arrow { font-style: normal; }
 
 /* Spinner */

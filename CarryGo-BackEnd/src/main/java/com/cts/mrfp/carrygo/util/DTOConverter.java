@@ -5,7 +5,6 @@ import com.cts.mrfp.carrygo.dto.*;
 import com.cts.mrfp.carrygo.model.Deliveries;
 import com.cts.mrfp.carrygo.model.Notifications;
 import com.cts.mrfp.carrygo.model.Ratings;
-import com.cts.mrfp.carrygo.model.Services;
 import com.cts.mrfp.carrygo.model.Transactions;
 import com.cts.mrfp.carrygo.model.Users;
 import com.cts.mrfp.carrygo.model.Wallets;
@@ -119,34 +118,6 @@ public class DTOConverter {
         dto.setTotalRejected(delivery.getTotalRejected());
 
         return dto;
-    }
-
-    // Services conversions
-    public static ServicesDTO convertServicesToDTO(Services service) {
-        if (service == null) {
-            return null;
-        }
-        return new ServicesDTO(
-            service.getService_Id(),
-            service.getService_name(),
-            service.getDescription(),
-            service.getIs_active()
-        );
-    }
-
-    public static Services convertDTOToServices(ServicesDTO dto) {
-        if (dto == null) {
-            return null;
-        }
-        Services service = new Services(
-            dto.getService_name(),
-            dto.getDescription(),
-            dto.getIs_active()
-        );
-        if (dto.getService_Id() != null) {
-            service.setService_Id(dto.getService_Id());
-        }
-        return service;
     }
 
     // Wallets conversions

@@ -215,6 +215,8 @@
           </div>
 
           <div class="btn-row">
+            <button type="button" class="btn-reset" (click)="resetStep()">Reset</button>
+            <button type="button" class="btn-reset-all" (click)="resetForm()">Reset All</button>
             <button class="btn-next" (click)="next()">Continue <span class="arrow">&#8594;</span></button>
           </div>
         </div>
@@ -314,6 +316,8 @@
 
           <div class="btn-row">
             <button class="btn-back" (click)="back()">&#8592; Back</button>
+            <button type="button" class="btn-reset" (click)="resetStep()">Reset</button>
+            <button type="button" class="btn-reset-all" (click)="resetForm()">Reset All</button>
             <button class="btn-next" (click)="next()">Continue <span class="arrow">&#8594;</span></button>
           </div>
         </div>
@@ -368,6 +372,8 @@
 
           <div class="btn-row">
             <button class="btn-back" (click)="back()">&#8592; Back</button>
+            <button type="button" class="btn-reset" (click)="resetStep()">Reset</button>
+            <button type="button" class="btn-reset-all" (click)="resetForm()">Reset All</button>
             <button class="btn-next" (click)="next()">Continue <span class="arrow">&#8594;</span></button>
           </div>
         </div>
@@ -432,6 +438,8 @@
 
           <div class="btn-row">
             <button class="btn-back" (click)="back()">&#8592; Back</button>
+            <button type="button" class="btn-reset" (click)="resetStep()">Reset</button>
+            <button type="button" class="btn-reset-all" (click)="resetForm()">Reset All</button>
             <button class="btn-next" (click)="next()">Continue <span class="arrow">&#8594;</span></button>
           </div>
         </div>
@@ -511,6 +519,8 @@
 
           <div class="btn-row">
             <button class="btn-back" (click)="back()">&#8592; Back</button>
+            <button type="button" class="btn-reset" (click)="resetStep()">Reset</button>
+            <button type="button" class="btn-reset-all" (click)="resetForm()">Reset All</button>
             <button class="btn-next" (click)="next()">Continue <span class="arrow">&#8594;</span></button>
           </div>
         </div>
@@ -570,6 +580,8 @@
 
           <div class="btn-row">
             <button class="btn-back" (click)="back()">&#8592; Back</button>
+            <button type="button" class="btn-reset" (click)="resetStep()">Reset</button>
+            <button type="button" class="btn-reset-all" (click)="resetForm()">Reset All</button>
             <button class="btn-next btn-submit" (click)="submitKyc()" [disabled]="isSubmitting">
               <span *ngIf="!isSubmitting">Submit for review &#8594;</span>
               <span *ngIf="isSubmitting" class="spinner"></span>

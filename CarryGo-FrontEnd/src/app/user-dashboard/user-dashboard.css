@@ -393,6 +393,29 @@
 .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
 .btn-primary.sm { width: auto; padding: 9px 20px; font-size: 13px; }
 
+.btn-reset-form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px 14px;
+  background: #fff;
+  color: #64748b;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.18s;
+}
+.btn-reset-form:hover {
+  border-color: #ef4444;
+  color: #ef4444;
+  background: #fef2f2;
+}
+
 .btn-outline {
   display: inline-flex;
   align-items: center;

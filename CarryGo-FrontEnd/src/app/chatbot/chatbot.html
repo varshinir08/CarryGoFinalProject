@@ -29,15 +29,13 @@
       </div>
     </div>
 
-    <!-- Language switcher -->
-    <div class="cb-lang-tabs">
-      <button
-        *ngFor="let l of langs"
-        class="cb-lang-btn"
-        [class.active]="lang === l.code"
-        (click)="switchLang(l.code)"
-      >{{ l.label }}</button>
-    </div>
+    <!-- Clear chat button -->
+    <button class="cb-clear-btn" (click)="clearChat()" title="Clear conversation">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round"
+          d="M4 4v6h6M20 20v-6h-6M5 19a9 9 0 0014.65-3.6M19 5A9 9 0 004.35 8.6"/>
+      </svg>
+    </button>
   </div>
 
   <!-- Messages -->

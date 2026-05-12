@@ -45,7 +45,8 @@ export class MapPickerComponent implements OnInit, AfterViewInit, OnChanges, OnD
   pickupLat?: number;
   pickupLng?: number;
 
-  /* ── Drop ── */
+
+   /* ── Drop ── */
   dropAddress = '';
   dropLat?: number;
   dropLng?: number;
@@ -92,8 +93,8 @@ export class MapPickerComponent implements OnInit, AfterViewInit, OnChanges, OnD
   }
 
  ngAfterViewInit(): void {
-  if (!isPlatformBrowser(this.platformId)) return;
-  this.fixLeafletIcons();
+if (!isPlatformBrowser(this.platformId)) return;
+this.fixLeafletIcons();
     this.leafletLoaded = true;
     // DO NOT call initMap() here — the container is hidden (display:none via [hidden]="!isOpen")
     // and Leaflet cannot calculate the map size on a zero-dimension element.
@@ -135,15 +136,15 @@ export class MapPickerComponent implements OnInit, AfterViewInit, OnChanges, OnD
   /* ─────────────── Map init ─────────────── */
 
  private fixLeafletIcons(): void {
-  if (!L || !L.Icon || !L.Icon.Default) return;
+ if (!L || !L.Icon || !L.Icon.Default) return;
 
-  delete (L.Icon.Default.prototype as any)._getIconUrl;
+delete (L.Icon.Default.prototype as any)._getIconUrl;
 
-  L.Icon.Default.mergeOptions({
-    iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
-    iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
-    shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png'
-  });
+L.Icon.Default.mergeOptions({
+iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
+iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png'
+ });
 }
 
   private initMap(): void {
@@ -293,9 +294,9 @@ export class MapPickerComponent implements OnInit, AfterViewInit, OnChanges, OnD
 if (this.routeLayer) this.routeLayer.remove();
 
 this.routeLayer = L.polyline(coords, {
-  color: '#f97316',
-  weight: 5,
-  opacity: 0.75
+color: '#f97316',
+ weight: 5,
+opacity: 0.75
 }).addTo(this.map);
 
 this.map.fitBounds(this.routeLayer.getBounds(), { padding: [50, 50] });
@@ -308,8 +309,8 @@ this.map.fitBounds(this.routeLayer.getBounds(), { padding: [50, 50] });
     });
   }
 
-  /* ─────────────── Nominatim Search ─────────────── */
 
+  /* ─────────────── Nominatim Search ─────────────── */
   onSearchInput(q: string): void {
     this.searchSubject.next(q);
   }

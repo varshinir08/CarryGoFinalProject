@@ -391,4 +391,77 @@ export class PorterKycComponent implements OnInit {
   }
 
   logout(): void { this.authService.logout(); this.router.navigate(['/login']); }
+
+  // ── Reset entire KYC form ──────────────────────────────────────────────────
+  resetForm(): void {
+    const ok = confirm('Reset the entire KYC form? All entered information on every step will be cleared.');
+    if (!ok) return;
+    this.form = {
+      fullName: '', dob: '', gender: '', phone: '', email: '',
+      idType: 'Aadhaar card', idNumber: '',
+      idFrontFile: null, idBackFile: null, idFrontPreview: '', idBackPreview: '',
+      houseNo: '', street: '', city: '', state: 'Telangana', pinCode: '',
+      vehicleType: '', vehicleModel: '', vehicleRegNo: '', licenceNumber: '', licenceExpiry: '',
+      accountHolder: '', accountNumber: '', confirmAccount: '', ifscCode: '', bankName: '',
+      agreedTerms: false, agreedAccuracy: false
+    };
+    this.errors = {};
+    this.showAccountNumber = false;
+    this.showConfirmAccount = false;
+    this.termsScrolled = false;
+    this.currentStep = 0;
+    window.scrollTo(0, 0);
+    this.cdr.detectChanges();
+  }
+
+  // ── Reset only the fields on the current step ──────────────────────────────
+  resetStep(): void {
+    switch (this.currentStep) {
+      case 0:
+        this.form.fullName = '';
+        this.form.dob = '';
+        this.form.gender = '';
+        this.form.phone = '';
+        this.form.email = '';
+        break;
+      case 1:
+        this.form.idType = 'Aadhaar card';
+        this.form.idNumber = '';
+        this.form.idFrontFile = null;
+        this.form.idBackFile = null;
+        this.form.idFrontPreview = '';
+        this.form.idBackPreview = '';
+        break;
+      case 2:
+        this.form.houseNo = '';
+        this.form.street = '';
+        this.form.city = '';
+        this.form.state = 'Telangana';
+        this.form.pinCode = '';
+        break;
+      case 3:
+        this.form.vehicleType = '';
+        this.form.vehicleModel = '';
+        this.form.vehicleRegNo = '';
+        this.form.licenceNumber = '';
+        this.form.licenceExpiry = '';
+        break;
+      case 4:
+        this.form.accountHolder = '';
+        this.form.accountNumber = '';
+        this.form.confirmAccount = '';
+        this.form.ifscCode = '';
+        this.form.bankName = '';
+        this.showAccountNumber = false;
+        this.showConfirmAccount = false;
+        break;
+      case 5:
+        this.form.agreedTerms = false;
+        this.form.agreedAccuracy = false;
+        this.termsScrolled = false;
+        break;
+    }
+    this.errors = {};
+    this.cdr.detectChanges();
+  }
 }

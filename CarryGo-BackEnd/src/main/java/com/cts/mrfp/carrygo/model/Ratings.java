@@ -10,7 +10,7 @@ public class Ratings {
     @Column(name="rating_id")
     private Integer ratingId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL )
     @JoinColumn(name = "delivery_id")
     private Deliveries delivery;
 

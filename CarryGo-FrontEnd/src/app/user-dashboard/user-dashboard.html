@@ -396,7 +396,6 @@
 
               <!-- Breakdown rows when API fare is available -->
               <ng-container *ngIf="fareEstimate">
-                <div class="price-row"><span>Distance</span><span>{{ fareEstimate.distanceKm | number:'1.1-1' }} km</span></div>
                 <div class="price-row"><span>Base fare</span><span>₹{{ fareEstimate.baseFare | number:'1.0-0' }}</span></div>
                 <div class="price-row"><span>Distance charge</span><span>₹{{ fareEstimate.distanceFare | number:'1.0-0' }}</span></div>
                 <div class="price-row" *ngIf="fareEstimate.timeFare > 0"><span>Time fare</span><span>₹{{ fareEstimate.timeFare | number:'1.0-0' }}</span></div>
@@ -471,6 +470,15 @@
                 <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
               </svg>
               {{ isSubmitting ? 'Booking…' : (hasSurge ? 'Book with Surge — ₹' + (fareEstimate?.totalFare | number:'1.0-0') : 'Book Delivery — ₹' + (fareEstimate?.totalFare ?? estimatedPrice | number:'1.0-0')) }}
+            </button>
+
+            <!-- Reset form -->
+            <button type="button" class="btn-reset-form" (click)="resetForm()">
+              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M4 4v6h6M20 20v-6h-6M5 19a9 9 0 0014.65-3.6M19 5A9 9 0 004.35 8.6"/>
+              </svg>
+              Reset Form
             </button>
           </div>
 

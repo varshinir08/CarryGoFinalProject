@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, ViewChild } from '@angular/core';
+import { FormsModule, NgForm } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { NgIf } from '@angular/common';
 import { AuthService } from '../services/auth.service';
@@ -27,6 +27,8 @@ get isCommuter(): boolean { return this.user.role === 'commuter'; }
 showPassword = false;
 showConfirmPassword = false;
 
+@ViewChild('registerForm') registerForm?: NgForm;
+
 constructor(private authService: AuthService) {}
 
   onSubmit() {
@@ -44,6 +46,28 @@ constructor(private authService: AuthService) {}
     this.authService.register(this.user).subscribe({
       next: () => alert('Registration successful'),
       error: () => alert('Registration failed')
+    });
+  }
+
+  resetForm() {
+    this.user = {
+      name: '',
+      email: '',
+      phone: '',
+      countryCode: '+91',
+      password: '',
+      confirmPassword: '',
+      role: this.user.role
+    };
+    this.showPassword = false;
+    this.showConfirmPassword = false;
+    this.registerForm?.resetForm({
+      name: '',
+      email: '',
+      phone: '',
+      countryCode: '+91',
+      password: '',
+      confirmPassword: ''
     });
   }
 }
