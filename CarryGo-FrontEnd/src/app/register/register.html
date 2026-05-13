@@ -50,9 +50,9 @@
       </select>
       <input id="phone" [(ngModel)]="user.phone" name="phone"
              placeholder="Phone Number"
-             required pattern="^[0-9]{10}$" #phone="ngModel"/>
+             required [pattern]="phonePattern" #phone="ngModel"/>
       <div class="error" *ngIf="phone.errors?.['pattern'] && phone.touched">
-        Phone number must be 10 digits
+        {{ phoneError }}
       </div>
     </div>
 

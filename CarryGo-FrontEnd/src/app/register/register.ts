@@ -24,6 +24,24 @@ user = {
 
 get isCommuter(): boolean { return this.user.role === 'commuter'; }
 
+get phonePattern(): string {
+  switch (this.user.countryCode) {
+    case '+91': return '^[6-9][0-9]{9}$';
+    case '+1':  return '^[2-9][0-9]{9}$';
+    case '+44': return '^7[0-9]{9}$';
+    default:    return '^[0-9]{10}$';
+  }
+}
+
+get phoneError(): string {
+  switch (this.user.countryCode) {
+    case '+91': return 'India numbers must be 10 digits and start with 6-9';
+    case '+1':  return 'USA numbers must be 10 digits and start with 2-9';
+    case '+44': return 'UK mobile numbers must be 10 digits and start with 7';
+    default:    return 'Phone number must be 10 digits';
+  }
+}
+
 showPassword = false;
 showConfirmPassword = false;
 
